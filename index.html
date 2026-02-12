@@ -1,557 +1,660 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Happy Valentine's Day</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Noto+Sans+SC:wght@300;400;700&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Noto+Sans+SC:wght@300;400;700&display=swap");
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Noto Sans SC", sans-serif;
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
+      }
+
+      /* ==================== Floating Hearts Background ==================== */
+      .hearts-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .heart {
+        position: absolute;
+        bottom: -50px;
+        opacity: 0;
+        animation: floatHeart linear infinite;
+      }
+
+      @keyframes floatHeart {
+        0% {
+          transform: translateX(0) rotate(0deg);
+          opacity: 0;
+          bottom: -50px;
         }
-
-        body {
-            font-family: 'Noto Sans SC', sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
+        10% {
+          opacity: 0.8;
         }
-
-        /* ==================== Floating Hearts Background ==================== */
-        .hearts-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
+        90% {
+          opacity: 0.6;
         }
-
-        .heart {
-            position: absolute;
-            bottom: -50px;
-            opacity: 0;
-            animation: floatHeart linear infinite;
+        100% {
+          transform: translateX(100px) rotate(360deg);
+          opacity: 0;
+          bottom: 110vh;
         }
+      }
 
-        @keyframes floatHeart {
-            0% {
-                transform: translateX(0) rotate(0deg);
-                opacity: 0;
-                bottom: -50px;
-            }
-            10% {
-                opacity: 0.8;
-            }
-            90% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateX(100px) rotate(360deg);
-                opacity: 0;
-                bottom: 110vh;
-            }
+      /* ==================== Pages ==================== */
+      .page {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          opacity 0.8s ease,
+          transform 0.8s ease;
+        z-index: 1;
+      }
+
+      .page.hidden {
+        opacity: 0;
+        transform: scale(0.95);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .page.active {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: all;
+        z-index: 2;
+      }
+
+      /* ==================== Page 1 - Welcome ==================== */
+      #page1 {
+        background: linear-gradient(
+          135deg,
+          #fce4ec 0%,
+          #f8bbd0 30%,
+          #f48fb1 60%,
+          #ec407a 100%
+        );
+      }
+
+      .dialog-box {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 40px;
+        max-width: 520px;
+        width: 90%;
+        text-align: center;
+        box-shadow:
+          0 20px 60px rgba(233, 30, 99, 0.3),
+          0 0 0 1px rgba(255, 255, 255, 0.5);
+        animation: dialogAppear 1s ease-out;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .dialog-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          #ec407a,
+          #f06292,
+          #f48fb1,
+          #f06292,
+          #ec407a
+        );
+        background-size: 200% 100%;
+        animation: shimmer 2s linear infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: -200% 0;
         }
-
-        /* ==================== Pages ==================== */
-        .page {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease, transform 0.8s ease;
-            z-index: 1;
+        100% {
+          background-position: 200% 0;
         }
+      }
 
-        .page.hidden {
-            opacity: 0;
-            transform: scale(0.95);
-            pointer-events: none;
-            z-index: 0;
+      @keyframes dialogAppear {
+        0% {
+          opacity: 0;
+          transform: translateY(30px) scale(0.9);
         }
-
-        .page.active {
-            opacity: 1;
-            transform: scale(1);
-            pointer-events: all;
-            z-index: 2;
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
         }
+      }
 
-        /* ==================== Page 1 - Welcome ==================== */
-        #page1 {
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 30%, #f48fb1 60%, #ec407a 100%);
+      .dialog-box h1 {
+        font-family: "Dancing Script", cursive;
+        font-size: 3rem;
+        color: #e91e63;
+        margin-bottom: 8px;
+        text-shadow: 2px 2px 4px rgba(233, 30, 99, 0.2);
+      }
+
+      .dialog-box .subtitle {
+        font-size: 1.1rem;
+        color: #f06292;
+        margin-bottom: 24px;
+        font-weight: 300;
+      }
+
+      .photo-gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+
+      .photo-gallery img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .photo-gallery img:hover {
+        transform: scale(1.05);
+      }
+
+      .photo-placeholder {
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .photo-placeholder:hover {
+        transform: scale(1.05);
+      }
+
+      /* ==================== Buttons ==================== */
+      .btn-romantic {
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        padding: 14px 40px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #ec407a, #e91e63);
+        color: white;
+        box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(233, 30, 99, 0.5);
+      }
+
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+
+      .btn-primary::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        animation: btnShine 3s ease-in-out infinite;
+      }
+
+      @keyframes btnShine {
+        0%,
+        100% {
+          left: -100%;
         }
+        50% {
+          left: 100%;
+        }
+      }
 
+      /* ==================== Page 2 - Proposal ==================== */
+      #page2 {
+        background: linear-gradient(
+          135deg,
+          #880e4f 0%,
+          #c2185b 50%,
+          #e91e63 100%
+        );
+      }
+
+      .bg-photo-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("photos/background.jpg");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.15;
+      }
+
+      .proposal-content {
+        text-align: center;
+        z-index: 1;
+        position: relative;
+        padding: 20px;
+      }
+
+      .proposal-content h2 {
+        font-family: "Dancing Script", cursive;
+        font-size: 3.5rem;
+        color: #fff;
+        margin-bottom: 12px;
+        text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+        animation: pulseText 2s ease-in-out infinite;
+      }
+
+      @keyframes pulseText {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.03);
+        }
+      }
+
+      .proposal-content .ring-emoji {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        display: block;
+        animation: ringBounce 1.5s ease-in-out infinite;
+      }
+
+      @keyframes ringBounce {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        25% {
+          transform: translateY(-10px) rotate(-5deg);
+        }
+        75% {
+          transform: translateY(-10px) rotate(5deg);
+        }
+      }
+
+      .proposal-question {
+        font-size: 2rem;
+        color: #fce4ec;
+        margin-bottom: 40px;
+        font-weight: 300;
+        text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 24px;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-yes {
+        background: linear-gradient(135deg, #fff, #fce4ec);
+        color: #e91e63;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        font-size: 1.3rem;
+        padding: 16px 48px;
+      }
+
+      .btn-yes:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      }
+
+      .btn-no {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        font-size: 1rem;
+        padding: 14px 36px;
+        position: fixed;
+        transition: none;
+      }
+
+      /* ==================== Page 3 - Thank You ==================== */
+      #page3 {
+        background: linear-gradient(
+          135deg,
+          #fce4ec 0%,
+          #f8bbd0 25%,
+          #f48fb1 50%,
+          #ec407a 75%,
+          #e91e63 100%
+        );
+      }
+
+      .thankyou-content {
+        text-align: center;
+        z-index: 1;
+        position: relative;
+        max-width: 600px;
+        width: 90%;
+        padding: 20px;
+      }
+
+      .thankyou-content .big-heart {
+        font-size: 5rem;
+        animation: heartBeat 1s ease-in-out infinite;
+        display: block;
+        margin-bottom: 16px;
+      }
+
+      @keyframes heartBeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        15% {
+          transform: scale(1.25);
+        }
+        30% {
+          transform: scale(1);
+        }
+        45% {
+          transform: scale(1.15);
+        }
+        60% {
+          transform: scale(1);
+        }
+      }
+
+      .thankyou-content h2 {
+        font-family: "Dancing Script", cursive;
+        font-size: 3rem;
+        color: #fff;
+        margin-bottom: 8px;
+        text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .thankyou-content .message {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 32px;
+        font-weight: 300;
+        line-height: 1.8;
+      }
+
+      .thankyou-photos {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+
+      .thankyou-photos .photo-placeholder {
+        aspect-ratio: 4/3;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .thankyou-photos img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+        border-radius: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      }
+
+      .forever-text {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.8rem;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      /* ==================== Confetti ==================== */
+      .confetti-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 100;
+        overflow: hidden;
+      }
+
+      .confetti-piece {
+        position: absolute;
+        top: -20px;
+        animation: confettiFall linear forwards;
+      }
+
+      @keyframes confettiFall {
+        0% {
+          transform: translateY(0) rotate(0deg) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh) rotate(720deg) scale(0.5);
+          opacity: 0;
+        }
+      }
+
+      /* ==================== Music Toggle Button ==================== */
+      .music-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        color: white;
+        font-size: 1.4rem;
+        cursor: pointer;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .music-btn:hover {
+        background: rgba(255, 255, 255, 0.4);
+        transform: scale(1.1);
+      }
+
+      .music-btn.playing {
+        animation: musicPulse 1s ease-in-out infinite;
+      }
+
+      @keyframes musicPulse {
+        0%,
+        100% {
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        50% {
+          box-shadow: 0 4px 20px rgba(233, 30, 99, 0.5);
+        }
+      }
+
+      /* ==================== Responsive ==================== */
+      @media (max-width: 600px) {
         .dialog-box {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 40px;
-            max-width: 520px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(233, 30, 99, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.5);
-            animation: dialogAppear 1s ease-out;
-            position: relative;
-            overflow: hidden;
+          padding: 28px 20px;
         }
-
-        .dialog-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #ec407a, #f06292, #f48fb1, #f06292, #ec407a);
-            background-size: 200% 100%;
-            animation: shimmer 2s linear infinite;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        @keyframes dialogAppear {
-            0% {
-                opacity: 0;
-                transform: translateY(30px) scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
         .dialog-box h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
-            color: #e91e63;
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(233, 30, 99, 0.2);
+          font-size: 2.2rem;
         }
-
-        .dialog-box .subtitle {
-            font-size: 1.1rem;
-            color: #f06292;
-            margin-bottom: 24px;
-            font-weight: 300;
-        }
-
-        .photo-gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 28px;
-        }
-
-        .photo-gallery img {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .photo-gallery img:hover {
-            transform: scale(1.05);
-        }
-
-        .photo-placeholder {
-            width: 100%;
-            aspect-ratio: 1;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .photo-placeholder:hover {
-            transform: scale(1.05);
-        }
-
-        /* ==================== Buttons ==================== */
-        .btn-romantic {
-            font-family: 'Noto Sans SC', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            padding: 14px 40px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #ec407a, #e91e63);
-            color: white;
-            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(233, 30, 99, 0.5);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 200%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: btnShine 3s ease-in-out infinite;
-        }
-
-        @keyframes btnShine {
-            0%, 100% { left: -100%; }
-            50% { left: 100%; }
-        }
-
-        /* ==================== Page 2 - Proposal ==================== */
-        #page2 {
-            background: linear-gradient(135deg, #880e4f 0%, #c2185b 50%, #e91e63 100%);
-        }
-
-        .bg-photo-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('photos/background.jpg');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.15;
-        }
-
-        .proposal-content {
-            text-align: center;
-            z-index: 1;
-            position: relative;
-            padding: 20px;
-        }
-
         .proposal-content h2 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
-            color: #fff;
-            margin-bottom: 12px;
-            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
-            animation: pulseText 2s ease-in-out infinite;
+          font-size: 2.5rem;
         }
-
-        @keyframes pulseText {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-
-        .proposal-content .ring-emoji {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            display: block;
-            animation: ringBounce 1.5s ease-in-out infinite;
-        }
-
-        @keyframes ringBounce {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-10px) rotate(-5deg); }
-            75% { transform: translateY(-10px) rotate(5deg); }
-        }
-
         .proposal-question {
-            font-size: 2rem;
-            color: #fce4ec;
-            margin-bottom: 40px;
-            font-weight: 300;
-            text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+          font-size: 1.5rem;
         }
-
         .btn-group {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
+          flex-direction: column;
+          align-items: center;
         }
-
-        .btn-yes {
-            background: linear-gradient(135deg, #fff, #fce4ec);
-            color: #e91e63;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            font-size: 1.3rem;
-            padding: 16px 48px;
-        }
-
-        .btn-yes:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .btn-no {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            font-size: 1rem;
-            padding: 14px 36px;
-            position: fixed;
-            transition: none;
-        }
-
-        /* ==================== Page 3 - Thank You ==================== */
-        #page3 {
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 25%, #f48fb1 50%, #ec407a 75%, #e91e63 100%);
-        }
-
-        .thankyou-content {
-            text-align: center;
-            z-index: 1;
-            position: relative;
-            max-width: 600px;
-            width: 90%;
-            padding: 20px;
-        }
-
-        .thankyou-content .big-heart {
-            font-size: 5rem;
-            animation: heartBeat 1s ease-in-out infinite;
-            display: block;
-            margin-bottom: 16px;
-        }
-
-        @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            15% { transform: scale(1.25); }
-            30% { transform: scale(1); }
-            45% { transform: scale(1.15); }
-            60% { transform: scale(1); }
-        }
-
         .thankyou-content h2 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
-            color: #fff;
-            margin-bottom: 8px;
-            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+          font-size: 2.2rem;
         }
-
-        .thankyou-content .message {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 32px;
-            font-weight: 300;
-            line-height: 1.8;
-        }
-
-        .thankyou-photos {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .thankyou-photos .photo-placeholder {
-            aspect-ratio: 4/3;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .thankyou-photos img {
-            width: 100%;
-            aspect-ratio: 4/3;
-            object-fit: cover;
-            border-radius: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        .forever-text {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        /* ==================== Confetti ==================== */
-        .confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 100;
-            overflow: hidden;
-        }
-
-        .confetti-piece {
-            position: absolute;
-            top: -20px;
-            animation: confettiFall linear forwards;
-        }
-
-        @keyframes confettiFall {
-            0% {
-                transform: translateY(0) rotate(0deg) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(110vh) rotate(720deg) scale(0.5);
-                opacity: 0;
-            }
-        }
-
-        /* ==================== Music Toggle Button ==================== */
-        .music-btn {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            color: white;
-            font-size: 1.4rem;
-            cursor: pointer;
-            z-index: 200;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .music-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: scale(1.1);
-        }
-
-        .music-btn.playing {
-            animation: musicPulse 1s ease-in-out infinite;
-        }
-
-        @keyframes musicPulse {
-            0%, 100% { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
-            50% { box-shadow: 0 4px 20px rgba(233, 30, 99, 0.5); }
-        }
-
-        /* ==================== Responsive ==================== */
-        @media (max-width: 600px) {
-            .dialog-box {
-                padding: 28px 20px;
-            }
-            .dialog-box h1 {
-                font-size: 2.2rem;
-            }
-            .proposal-content h2 {
-                font-size: 2.5rem;
-            }
-            .proposal-question {
-                font-size: 1.5rem;
-            }
-            .btn-group {
-                flex-direction: column;
-                align-items: center;
-            }
-            .thankyou-content h2 {
-                font-size: 2.2rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <!-- Floating Hearts Background -->
     <div class="hearts-bg" id="heartsBg"></div>
 
     <!-- ==================== Page 1: Welcome ==================== -->
     <div class="page active" id="page1">
-        <div class="dialog-box">
-            <h1>Happy Valentine's Day</h1>
-            <p class="subtitle">情人节快乐</p>
+      <div class="dialog-box">
+        <h1>Happy Valentine's Day</h1>
+        <p class="subtitle">
+          2026年2月14日 情人节快乐，亲爱的。
+          今年我没有准备鲜花或华丽的仪式，但我想用我最擅长的方式，为你创造一份独一无二的礼物。这个网站的每一行代码，都藏着我对你的心意。
+          希望你喜欢这份专属于你的浪漫
+        </p>
 
-            <div class="photo-gallery">
-                <!-- 替换成你们的照片，例如：<img src="photos/1.jpg" alt="我们的照片"> -->
-                <div class="photo-placeholder">💑</div>
-                <div class="photo-placeholder">🥰</div>
-                <div class="photo-placeholder">💕</div>
-                <div class="photo-placeholder">✨</div>
-                <div class="photo-placeholder">🌹</div>
-                <div class="photo-placeholder">💖</div>
-            </div>
-
-            <button class="btn-romantic btn-primary" onclick="startMusic(); goToPage(2)">
-                你准备好了吗？
-            </button>
+        <div class="photo-gallery">
+          <!-- 替换成你们的照片，例如：<img src="photos/1.jpg" alt="我们的照片"> -->
+          <div class="photo-placeholder">
+            <img src="photos/1.jpeg" alt="我们的照片1" />
+          </div>
+          <div class="photo-placeholder">
+            <img src="photos/2.jpeg" alt="我们的照片2" />
+          </div>
+          <div class="photo-placeholder">
+            <img src="photos/3.jpeg" alt="我们的照片3" />
+          </div>
+          <div class="photo-placeholder">
+            <img src="photos/4.jpeg" alt="我们的照片4" />
+          </div>
+          <div class="photo-placeholder">
+            <img src="photos/5.jpeg" alt="我们的照片5" />
+          </div>
+          <div class="photo-placeholder">
+            <img src="photos/6.jpeg" alt="我们的照片6" />
+          </div>
         </div>
+
+        <button
+          class="btn-romantic btn-primary"
+          onclick="
+            startMusic();
+            goToPage(2);
+          "
+        >
+          你准备好了吗？
+        </button>
+      </div>
     </div>
 
     <!-- ==================== Page 2: Proposal ==================== -->
     <div class="page hidden" id="page2">
-        <div class="bg-photo-overlay"></div>
-        <div class="proposal-content">
-            <span class="ring-emoji">💍</span>
-            <h2>My Dearest Love</h2>
-            <p class="proposal-question">请问你愿意嫁给我吗？</p>
+      <div class="bg-photo-overlay"></div>
+      <div class="proposal-content">
+        <span class="ring-emoji">💍</span>
+        <h2>My Dearest Love</h2>
+        <p class="proposal-question">请问你愿意嫁给我吗？</p>
 
-            <div class="btn-group">
-                <button class="btn-romantic btn-yes" onclick="sayYes()">
-                    愿意
-                </button>
-                <button class="btn-romantic btn-no" id="btnNo"
-                    onmouseover="runAway()"
-                    ontouchstart="runAway()">
-                    不愿意
-                </button>
-            </div>
+        <div class="btn-group">
+          <button class="btn-romantic btn-yes" onclick="sayYes()">愿意</button>
+          <button
+            class="btn-romantic btn-no"
+            id="btnNo"
+            onmouseover="runAway()"
+            ontouchstart="runAway()"
+          >
+            不愿意
+          </button>
         </div>
+      </div>
     </div>
 
     <!-- ==================== Page 3: Thank You ==================== -->
     <div class="page hidden" id="page3">
-        <div class="thankyou-content">
-            <span class="big-heart">💖</span>
-            <h2>谢谢你愿意嫁给我</h2>
-            <p class="message">
-                从今以后，我会用一生来爱你、守护你<br>
-                你是我最美的遇见
-            </p>
+      <div class="thankyou-content">
+        <span class="big-heart">💖</span>
+        <h2>谢谢你愿意嫁给我</h2>
+        <p class="message">
+          从今以后，我会用一生来爱你、守护你<br />
+          你是我最美的遇见
+        </p>
 
-            <div class="thankyou-photos">
-                <!-- 替换成你们的照片，例如：<img src="photos/a.jpg" alt="我们的照片"> -->
-                <div class="photo-placeholder">👰</div>
-                <div class="photo-placeholder">🤵</div>
-                <div class="photo-placeholder">💒</div>
-                <div class="photo-placeholder">💞</div>
-            </div>
-
-            <p class="forever-text">Forever & Always</p>
+        <div class="thankyou-photos">
+          <!-- 替换成你们的照片，例如：<img src="photos/a.jpg" alt="我们的照片"> -->
+          <div class="photo-placeholder">👰</div>
+          <div class="photo-placeholder">🤵</div>
+          <div class="photo-placeholder">
+            <img src="photos/7.jpeg" alt="我们的照片7" />
+          </div>
+          <div class="photo-placeholder">
+            <img src="photos/8.jpeg" alt="我们的照片8" />
+          </div>
+          <div class="photo-placeholder">
+            <img src="photos/9.jpeg" alt="我们的照片9" />
+          </div>
+          <div class="photo-placeholder">
+            <img src="photos/10.jpeg" alt="我们的照片10" />
+          </div>
         </div>
+
+        <p class="forever-text">Forever & Always</p>
+      </div>
     </div>
 
     <!-- Confetti container -->
@@ -559,150 +662,196 @@
 
     <!-- Background Music: 把 music/告白气球.mp3 替换成你的音乐文件路径 -->
     <audio id="bgMusic" loop preload="auto" autoplay>
-        <source src="music/告白气球.mp3" type="audio/mpeg">
+      <source src="music/告白气球.mp3" type="audio/mpeg" />
     </audio>
 
     <!-- Music Toggle Button -->
-    <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="音乐开关">🔇</button>
+    <button
+      class="music-btn"
+      id="musicBtn"
+      onclick="toggleMusic()"
+      title="音乐开关"
+    >
+      🔇
+    </button>
 
     <script>
-        // ==================== Floating Hearts ====================
-        function createHeart() {
-            var heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            heart.style.animationDuration = (Math.random() * 5 + 6) + 's';
-            heart.style.animationDelay = Math.random() * 2 + 's';
+      // ==================== Floating Hearts ====================
+      function createHeart() {
+        var heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 10 + "px";
+        heart.style.animationDuration = Math.random() * 5 + 6 + "s";
+        heart.style.animationDelay = Math.random() * 2 + "s";
 
-            var colors = ['#e91e63', '#f06292', '#f48fb1', '#ff80ab', '#ff4081', '#c2185b'];
-            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-            heart.textContent = '\u2764';
+        var colors = [
+          "#e91e63",
+          "#f06292",
+          "#f48fb1",
+          "#ff80ab",
+          "#ff4081",
+          "#c2185b",
+        ];
+        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+        heart.textContent = "\u2764";
 
-            document.getElementById('heartsBg').appendChild(heart);
+        document.getElementById("heartsBg").appendChild(heart);
 
-            setTimeout(function() { heart.remove(); }, 13000);
-        }
+        setTimeout(function () {
+          heart.remove();
+        }, 13000);
+      }
 
-        setInterval(createHeart, 400);
+      setInterval(createHeart, 400);
 
-        // ==================== Background Music ====================
-        var bgMusic = document.getElementById('bgMusic');
-        var musicBtn = document.getElementById('musicBtn');
+      // ==================== Background Music ====================
+      var bgMusic = document.getElementById("bgMusic");
+      var musicBtn = document.getElementById("musicBtn");
 
-        // 尝试自动播放
-        bgMusic.volume = 0.5;
-        bgMusic.play().then(function() {
-            musicBtn.textContent = '\uD83D\uDD0A';
-            musicBtn.classList.add('playing');
-        }).catch(function() {
-            // 浏览器阻止自动播放 — 监听用户第一次点击页面任何地方就播放
-            document.addEventListener('click', function tryPlay() {
-                bgMusic.play().then(function() {
-                    musicBtn.textContent = '\uD83D\uDD0A';
-                    musicBtn.classList.add('playing');
-                });
-                document.removeEventListener('click', tryPlay);
+      // 尝试自动播放
+      bgMusic.volume = 0.5;
+      bgMusic
+        .play()
+        .then(function () {
+          musicBtn.textContent = "\uD83D\uDD0A";
+          musicBtn.classList.add("playing");
+        })
+        .catch(function () {
+          // 浏览器阻止自动播放 — 监听用户第一次点击页面任何地方就播放
+          document.addEventListener("click", function tryPlay() {
+            bgMusic.play().then(function () {
+              musicBtn.textContent = "\uD83D\uDD0A";
+              musicBtn.classList.add("playing");
             });
+            document.removeEventListener("click", tryPlay);
+          });
         });
 
-        function startMusic() {
-            bgMusic.play().then(function() {
-                musicBtn.textContent = '\uD83D\uDD0A';
-                musicBtn.classList.add('playing');
-            }).catch(function() {});
+      function startMusic() {
+        bgMusic
+          .play()
+          .then(function () {
+            musicBtn.textContent = "\uD83D\uDD0A";
+            musicBtn.classList.add("playing");
+          })
+          .catch(function () {});
+      }
+
+      function toggleMusic() {
+        if (bgMusic.paused) {
+          bgMusic.play();
+          musicBtn.textContent = "\uD83D\uDD0A";
+          musicBtn.classList.add("playing");
+        } else {
+          bgMusic.pause();
+          musicBtn.textContent = "\uD83D\uDD07";
+          musicBtn.classList.remove("playing");
+        }
+      }
+
+      // ==================== Page Navigation ====================
+      function goToPage(pageNum) {
+        var pages = document.querySelectorAll(".page");
+        for (var i = 0; i < pages.length; i++) {
+          pages[i].classList.remove("active");
+          pages[i].classList.add("hidden");
         }
 
-        function toggleMusic() {
-            if (bgMusic.paused) {
-                bgMusic.play();
-                musicBtn.textContent = '\uD83D\uDD0A';
-                musicBtn.classList.add('playing');
-            } else {
-                bgMusic.pause();
-                musicBtn.textContent = '\uD83D\uDD07';
-                musicBtn.classList.remove('playing');
-            }
+        var target = document.getElementById("page" + pageNum);
+        target.classList.remove("hidden");
+        target.classList.add("active");
+
+        if (pageNum === 2) {
+          resetNoButton();
+        }
+      }
+
+      // ==================== Runaway Button ====================
+      var btnNo = document.getElementById("btnNo");
+
+      function resetNoButton() {
+        btnNo.style.position = "relative";
+        btnNo.style.left = "auto";
+        btnNo.style.top = "auto";
+      }
+
+      var noMessages = [
+        "不愿意",
+        "抓不到我～",
+        "再想想嘛！",
+        "不可以！",
+        "你确定？",
+        "别这样～",
+        "不行不行！",
+        "再考虑一下？",
+        "我会伤心的",
+        "你忍心吗？",
+        "不许按！",
+        "嘿嘿～跑了",
+      ];
+
+      function runAway() {
+        var padding = 80;
+        var maxX = window.innerWidth - btnNo.offsetWidth - padding;
+        var maxY = window.innerHeight - btnNo.offsetHeight - padding;
+
+        var newX = Math.random() * maxX + padding / 2;
+        var newY = Math.random() * maxY + padding / 2;
+
+        btnNo.style.position = "fixed";
+        btnNo.style.left = newX + "px";
+        btnNo.style.top = newY + "px";
+        btnNo.style.zIndex = "10";
+
+        btnNo.textContent =
+          noMessages[Math.floor(Math.random() * noMessages.length)];
+      }
+
+      // ==================== Say Yes ====================
+      function sayYes() {
+        launchConfetti();
+        setTimeout(function () {
+          goToPage(3);
+        }, 800);
+      }
+
+      // ==================== Confetti ====================
+      var confettiEmojis = [
+        "\u2764\uFE0F",
+        "\uD83D\uDC95",
+        "\uD83D\uDC96",
+        "\uD83D\uDC97",
+        "\uD83C\uDF89",
+        "\u2728",
+        "\uD83C\uDF39",
+        "\uD83D\uDC90",
+        "\uD83E\uDD42",
+        "\uD83D\uDC8D",
+      ];
+
+      function launchConfetti() {
+        var container = document.getElementById("confetti");
+
+        for (var i = 0; i < 80; i++) {
+          var piece = document.createElement("div");
+          piece.className = "confetti-piece";
+          piece.textContent =
+            confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
+          piece.style.left = Math.random() * 100 + "vw";
+          piece.style.fontSize = Math.random() * 20 + 14 + "px";
+          piece.style.animationDuration = Math.random() * 2 + 2 + "s";
+          piece.style.animationDelay = Math.random() * 1 + "s";
+
+          container.appendChild(piece);
         }
 
-        // ==================== Page Navigation ====================
-        function goToPage(pageNum) {
-            var pages = document.querySelectorAll('.page');
-            for (var i = 0; i < pages.length; i++) {
-                pages[i].classList.remove('active');
-                pages[i].classList.add('hidden');
-            }
-
-            var target = document.getElementById('page' + pageNum);
-            target.classList.remove('hidden');
-            target.classList.add('active');
-
-            if (pageNum === 2) {
-                resetNoButton();
-            }
-        }
-
-        // ==================== Runaway Button ====================
-        var btnNo = document.getElementById('btnNo');
-
-        function resetNoButton() {
-            btnNo.style.position = 'relative';
-            btnNo.style.left = 'auto';
-            btnNo.style.top = 'auto';
-        }
-
-        var noMessages = [
-            '不愿意', '抓不到我～', '再想想嘛！', '不可以！',
-            '你确定？', '别这样～', '不行不行！', '再考虑一下？',
-            '我会伤心的', '你忍心吗？', '不许按！', '嘿嘿～跑了',
-        ];
-
-        function runAway() {
-            var padding = 80;
-            var maxX = window.innerWidth - btnNo.offsetWidth - padding;
-            var maxY = window.innerHeight - btnNo.offsetHeight - padding;
-
-            var newX = Math.random() * maxX + padding / 2;
-            var newY = Math.random() * maxY + padding / 2;
-
-            btnNo.style.position = 'fixed';
-            btnNo.style.left = newX + 'px';
-            btnNo.style.top = newY + 'px';
-            btnNo.style.zIndex = '10';
-
-            btnNo.textContent = noMessages[Math.floor(Math.random() * noMessages.length)];
-        }
-
-        // ==================== Say Yes ====================
-        function sayYes() {
-            launchConfetti();
-            setTimeout(function() { goToPage(3); }, 800);
-        }
-
-        // ==================== Confetti ====================
-        var confettiEmojis = ['\u2764\uFE0F', '\uD83D\uDC95', '\uD83D\uDC96', '\uD83D\uDC97', '\uD83C\uDF89', '\u2728', '\uD83C\uDF39', '\uD83D\uDC90', '\uD83E\uDD42', '\uD83D\uDC8D'];
-
-        function launchConfetti() {
-            var container = document.getElementById('confetti');
-
-            for (var i = 0; i < 80; i++) {
-                var piece = document.createElement('div');
-                piece.className = 'confetti-piece';
-                piece.textContent = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
-                piece.style.left = Math.random() * 100 + 'vw';
-                piece.style.fontSize = (Math.random() * 20 + 14) + 'px';
-                piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                piece.style.animationDelay = Math.random() * 1 + 's';
-
-                container.appendChild(piece);
-            }
-
-            setTimeout(function() {
-                while (container.firstChild) {
-                    container.removeChild(container.firstChild);
-                }
-            }, 5000);
-        }
+        setTimeout(function () {
+          while (container.firstChild) {
+            container.removeChild(container.firstChild);
+          }
+        }, 5000);
+      }
     </script>
-</body>
+  </body>
 </html>
