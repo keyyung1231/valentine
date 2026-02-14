@@ -17,6 +17,7 @@
         font-family: "Noto Sans SC", sans-serif;
         overflow: hidden;
         height: 100vh;
+        height: 100dvh;
         width: 100vw;
       }
 
@@ -72,6 +73,9 @@
           opacity 0.8s ease,
           transform 0.8s ease;
         z-index: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 20px 0;
       }
 
       .page.hidden {
@@ -590,24 +594,106 @@
 
       /* ==================== Responsive ==================== */
       @media (max-width: 600px) {
+        .page {
+          align-items: flex-start;
+          padding: 24px 0;
+        }
+
         .dialog-box {
-          padding: 28px 20px;
+          padding: 24px 16px;
+          border-radius: 18px;
+          width: 92%;
+          margin: auto;
         }
         .dialog-box h1 {
-          font-size: 2.2rem;
+          font-size: 2rem;
         }
+        .dialog-box .subtitle {
+          font-size: 0.9rem;
+          margin-bottom: 16px;
+        }
+
+        .photo-gallery {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 6px;
+          margin-bottom: 20px;
+        }
+
+        .btn-romantic {
+          font-size: 1rem;
+          padding: 12px 28px;
+        }
+
         .proposal-content h2 {
-          font-size: 2.5rem;
+          font-size: 2rem;
+        }
+        .proposal-content .ring-emoji {
+          font-size: 3rem;
         }
         .proposal-question {
-          font-size: 1.5rem;
+          font-size: 1.3rem;
+          margin-bottom: 28px;
+        }
+        .btn-yes {
+          font-size: 1.1rem;
+          padding: 14px 36px;
         }
         .btn-group {
           flex-direction: column;
           align-items: center;
         }
+
+        .thankyou-content {
+          width: 92%;
+          margin: auto;
+          padding: 16px 0;
+        }
+        .thankyou-content .big-heart {
+          font-size: 3.5rem;
+        }
         .thankyou-content h2 {
-          font-size: 2.2rem;
+          font-size: 2rem;
+        }
+        .thankyou-content .message {
+          font-size: 1rem;
+          margin-bottom: 20px;
+        }
+        .thankyou-photos {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 8px;
+          margin-bottom: 16px;
+        }
+        .forever-text {
+          font-size: 1.4rem;
+        }
+
+        .music-btn {
+          bottom: 16px;
+          right: 16px;
+          width: 42px;
+          height: 42px;
+          font-size: 1.2rem;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .dialog-box h1 {
+          font-size: 1.7rem;
+        }
+        .dialog-box .subtitle {
+          font-size: 0.8rem;
+        }
+        .photo-gallery {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .proposal-content h2 {
+          font-size: 1.7rem;
+        }
+        .proposal-question {
+          font-size: 1.1rem;
+        }
+        .thankyou-content h2 {
+          font-size: 1.7rem;
         }
       }
     </style>
